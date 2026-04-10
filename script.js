@@ -185,18 +185,6 @@ const BASE_RARITY_WEIGHT = {
   VOID: 0.78,
 };
 
-const PRODUCT_LINK = "vbti.site";
-const TYPE_THEME_COLORS = {
-  ARCX: { main: "#c4b5fd", alt: "#ffffff", ink: "#000000" },
-  BLTZ: { main: "#ff6b6b", alt: "#ffd93d", ink: "#000000" },
-  PIXL: { main: "#ffd93d", alt: "#ffffff", ink: "#000000" },
-  SYNC: { main: "#c4b5fd", alt: "#ff6b6b", ink: "#000000" },
-  GLCH: { main: "#000000", alt: "#ff6b6b", ink: "#000000" },
-  MUSE: { main: "#ff6b6b", alt: "#c4b5fd", ink: "#000000" },
-  WAVE: { main: "#ffd93d", alt: "#ff6b6b", ink: "#000000" },
-  VOID: { main: "#000000", alt: "#ffffff", ink: "#000000" },
-};
-
 const state = {
   current: 0,
   answers: Array(QUESTION_BANK.length).fill(null),
@@ -216,7 +204,6 @@ const progressBar = document.getElementById("progressBar");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const retryBtn = document.getElementById("retryBtn");
-const savePosterBtn = document.getElementById("savePosterBtn");
 const resultBadge = document.getElementById("resultBadge");
 const resultCode = document.getElementById("resultCode");
 const resultFlavor = document.getElementById("resultFlavor");
@@ -288,191 +275,6 @@ function computeResult() {
   return { primary: distribution[0].type, distribution };
 }
 
-function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  const chars = Array.from(text);
-  let line = "";
-  let currentY = y;
-
-  chars.forEach((char) => {
-    const testLine = line + char;
-    if (ctx.measureText(testLine).width > maxWidth && line) {
-      ctx.fillText(line, x, currentY);
-      line = char;
-      currentY += lineHeight;
-    } else {
-      line = testLine;
-    }
-  });
-
-  if (line) {
-    ctx.fillText(line, x, currentY);
-  }
-
-  return currentY;
-}
-
-function loadCanvasSafeImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-    img.src = `${src}${src.includes("?") ? "&" : "?"}v=${Date.now()}`;
-  });
-}
-
-function paintPoster(ctx, primary, profile, palette, avatarImage) {
-  const canvas = ctx.canvas;
-
-  ctx.fillStyle = "#fffdf5";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.strokeStyle = "#000000";
-  ctx.lineWidth = 4;
-  for (let x = 0; x < canvas.width; x += 40) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, canvas.height);
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.08)";
-    ctx.stroke();
-  }
-  for (let y = 0; y < canvas.height; y += 40) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(canvas.width, y);
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.08)";
-    ctx.stroke();
-  }
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(72, 72, 936, 1296);
-  ctx.strokeStyle = "#000000";
-  ctx.lineWidth = 8;
-  ctx.strokeRect(72, 72, 936, 1296);
-
-  if (avatarImage) {
-    ctx.drawImage(avatarImage, 120, 120, 150, 150);
-  } else {
-    ctx.fillStyle = palette.alt;
-    ctx.fillRect(120, 120, 150, 150);
-    ctx.strokeStyle = "#000000";
-    ctx.lineWidth = 8;
-    ctx.strokeRect(120, 120, 150, 150);
-    ctx.fillStyle = "#000000";
-    ctx.font = "900 28px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(primary, 195, 195);
-  }
-  ctx.strokeStyle = "#000000";
-  ctx.lineWidth = 8;
-  ctx.strokeRect(120, 120, 150, 150);
-
-  ctx.fillStyle = "#000000";
-  ctx.textAlign = "left";
-  ctx.textBaseline = "top";
-  ctx.font = "900 32px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  ctx.fillText("DOMINANT TYPE", 310, 122);
-
-  ctx.fillStyle = palette.main;
-  ctx.fillRect(310, 174, 300, 70);
-  ctx.strokeRect(310, 174, 300, 70);
-  ctx.fillStyle = primary === "VOID" ? "#ffffff" : "#000000";
-  ctx.font = "900 28px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  ctx.fillText(profile.badge, 336, 196);
-
-  ctx.fillStyle = primary === "VOID" ? "#000000" : palette.main;
-  ctx.fillRect(742, 120, 150, 150);
-  ctx.strokeRect(742, 120, 150, 150);
-  ctx.fillStyle = primary === "VOID" ? "#ffffff" : "#000000";
-  ctx.font = "900 60px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(primary, 817, 196);
-
-  ctx.textAlign = "left";
-  ctx.textBaseline = "top";
-  ctx.fillStyle = "#000000";
-  ctx.font = "900 72px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  let lastY = wrapText(ctx, profile.name, 120, 328, 770, 82);
-
-  ctx.fillStyle = "#FFD93D";
-  ctx.fillRect(120, lastY + 42, 360, 74);
-  ctx.strokeRect(120, lastY + 42, 360, 74);
-  ctx.fillStyle = "#000000";
-  ctx.font = "900 30px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  ctx.fillText(profile.rarity, 146, lastY + 64);
-
-  ctx.font = "700 31px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  lastY = wrapText(ctx, profile.desc, 120, lastY + 156, 800, 48);
-
-  let tagX = 120;
-  let tagY = lastY + 62;
-  profile.tags.forEach((tag) => {
-    const width = Math.ceil(ctx.measureText(tag).width) + 56;
-    if (tagX + width > 920) {
-      tagX = 120;
-      tagY += 66;
-    }
-    ctx.fillStyle = palette.alt;
-    ctx.fillRect(tagX, tagY, width, 48);
-    ctx.strokeRect(tagX, tagY, width, 48);
-    ctx.fillStyle = "#000000";
-    ctx.font = "900 24px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-    ctx.fillText(tag, tagX + 20, tagY + 31);
-    tagX += width + 16;
-  });
-
-  const flavorY = tagY + 86;
-  ctx.fillStyle = palette.main;
-  ctx.fillRect(120, flavorY, 772, 250);
-  ctx.strokeRect(120, flavorY, 772, 250);
-  ctx.fillStyle = primary === "VOID" ? "#ffffff" : "#000000";
-  ctx.font = "900 28px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  ctx.fillText("典型行为", 150, flavorY + 28);
-  ctx.font = "700 31px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  wrapText(ctx, profile.flavor, 150, flavorY + 82, 710, 48);
-
-  ctx.strokeStyle = "#000000";
-  ctx.lineWidth = 8;
-  ctx.beginPath();
-  ctx.moveTo(120, 1250);
-  ctx.lineTo(892, 1250);
-  ctx.stroke();
-
-  ctx.fillStyle = "#000000";
-  ctx.font = "900 28px 'Space Grotesk', 'Noto Sans SC', sans-serif";
-  ctx.fillText(`测测你的 Vibe Coding 人格 · ${PRODUCT_LINK}`, 120, 1280);
-}
-
-async function downloadPoster(primary, profile) {
-  const palette = TYPE_THEME_COLORS[primary];
-  const canvas = document.createElement("canvas");
-  canvas.width = 1080;
-  canvas.height = 1440;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-  let avatarImage = null;
-  try {
-    avatarImage = await loadCanvasSafeImage(profile.avatar);
-  } catch {
-    avatarImage = null;
-  }
-  paintPoster(ctx, primary, profile, palette, avatarImage);
-
-  const link = document.createElement("a");
-  link.download = `vbti-${primary.toLowerCase()}.png`;
-  try {
-    link.href = canvas.toDataURL("image/png");
-  } catch {
-    paintPoster(ctx, primary, profile, palette, null);
-    link.href = canvas.toDataURL("image/png");
-  }
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-}
-
 function renderResult() {
   const { primary, distribution } = computeResult();
   const profile = TYPES[primary];
@@ -521,7 +323,6 @@ function resetAll() {
   quizPanel.classList.add("hidden");
   resultPanel.classList.add("hidden");
   clearThemeClasses();
-  savePosterBtn.textContent = "一键保存分享图";
   document.getElementById("app").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -546,18 +347,6 @@ nextBtn.onclick = () => {
 };
 
 retryBtn.onclick = resetAll;
-savePosterBtn.onclick = async () => {
-  try {
-    const { primary } = computeResult();
-    const profile = TYPES[primary];
-    await downloadPoster(primary, profile);
-    savePosterBtn.textContent = "分享图已保存";
-    setTimeout(() => (savePosterBtn.textContent = "一键保存分享图"), 1500);
-  } catch {
-    savePosterBtn.textContent = "保存失败，请重试";
-    setTimeout(() => (savePosterBtn.textContent = "一键保存分享图"), 1800);
-  }
-};
 
 (function initFromHash() {
   const hash = location.hash;
