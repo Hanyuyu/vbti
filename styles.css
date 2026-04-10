@@ -624,6 +624,21 @@ dialog h3 {
   margin-top: 1rem;
 }
 
+.result-roast {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border: 4px solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  background: var(--yellow);
+}
+
+.result-roast p:last-child {
+  margin-top: 0.45rem;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.55;
+}
+
 .result-flavor {
   margin-top: 1.2rem;
   padding: 1rem;
@@ -637,6 +652,16 @@ dialog h3 {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.65;
+}
+
+.result-site {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 4px solid var(--ink);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .chips {
@@ -943,6 +968,21 @@ dialog .btn {
     margin-top: 0.45rem;
     font-size: 0.95rem;
     line-height: 1.6;
+  }
+
+  .result-site {
+    margin-top: 0.9rem;
+    padding-top: 0.65rem;
+    font-size: 0.82rem;
+  }
+
+  .result-roast {
+    margin-top: 0.9rem;
+    padding: 0.75rem 0.8rem;
+  }
+
+  .result-roast p:last-child {
+    font-size: 0.95rem;
   }
 
   .result-actions {

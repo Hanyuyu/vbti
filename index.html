@@ -31,8 +31,8 @@
             </h1>
           </div>
           <p class="hero-lead">
-            这不是 MBTI 的程序员翻版，而是一份给 Builder、Designer、Prompt 玩家和增长型工程师的气质检测。
-            10 道题，3 分钟，直接测出你在 AI 协作时代最像哪种角色。
+            这不是给你做职业规划的，这是给你贴赛博标签的。
+            10 道题，3 分钟，测出你在 AI 时代到底是造神、造梗，还是稳定地造事故。
           </p>
           <div class="hero-actions">
             <button id="startBtn" class="btn btn-accent">开始暴露你的编码本性</button>
@@ -44,9 +44,9 @@
           <div class="panel panel-light tilt-right feature-board">
             <p class="board-kicker">WHAT YOU GET</p>
             <ul class="feature-list">
-              <li>8 种 Vibe Coding 原型</li>
-              <li>人格稀缺度 + 标签组合</li>
-              <li>可直接发朋友圈的结果文案</li>
+              <li>8 种适合互相贴标签的 Vibe Coding 人设</li>
+              <li>稀缺度、标签和一句不太留情的锐评</li>
+              <li>发群里很容易引战，谨慎测试</li>
             </ul>
           </div>
 
@@ -71,17 +71,17 @@
         <article class="panel panel-light intro-card tilt-left">
           <p class="intro-index">01</p>
           <h2>不是测技术强弱</h2>
-          <p>测的是你面对 AI、协作、速度、审美和工程质量时的默认反应。</p>
+          <p>测的是你一到真场景里，先开冲、先甩锅、先抠细节，还是先把别人节奏打乱。</p>
         </article>
         <article class="panel panel-yellow intro-card">
           <p class="intro-index">02</p>
           <h2>结果足够有梗</h2>
-          <p>每个类型都有鲜明叙事、标签和传播感，不是中性空话。</p>
+          <p>每个类型都像一个你认识的同事，没有的话你就是那个。</p>
         </article>
         <article class="panel panel-violet intro-card tilt-right">
           <p class="intro-index">03</p>
-          <h2>界面就是态度</h2>
-          <p>这次整个页面按 Neo-brutalism 重做，像一张会动的数字海报。</p>
+          <h2>没有安全答案</h2>
+          <p>别想选“看起来比较高级”的那项，这套题专门抓你最真实也最欠揍的工作本能。</p>
         </article>
       </section>
 
@@ -125,7 +125,7 @@
         <div class="result-head">
           <div class="panel panel-yellow result-tag-wrap tilt-left">
             <p class="result-tag">VBTI RESULT</p>
-            <p class="result-subtag">你的默认创作姿态已经暴露</p>
+            <p class="result-subtag">你的 vibe 人格已经暴露</p>
           </div>
         </div>
 
@@ -147,15 +147,22 @@
             <p id="resultRarity" class="rarity"></p>
             <p id="resultDesc" class="result-desc"></p>
             <div class="chips" id="traitChips"></div>
+            <div class="result-roast">
+              <p class="side-title">锐评</p>
+              <p id="resultRoast"></p>
+            </div>
             <div class="result-flavor">
               <p class="side-title">典型行为</p>
               <p id="resultFlavor"></p>
+            </div>
+            <div class="result-site">
+              <strong>vbti.site</strong>
             </div>
           </section>
 
           <aside class="result-side">
             <div class="panel panel-accent action-card">
-              <p class="side-title">继续探索</p>
+              <p class="side-title">不服再来一次</p>
               <div class="result-actions">
                 <button id="retryBtn" class="btn btn-yellow">重新测试</button>
               </div>
@@ -178,9 +185,9 @@
         <p class="eyebrow">HOW TO PLAY</p>
         <h3>这份测试怎么玩？</h3>
         <ul>
-          <li>共 10 道题，每题都模拟真实的 AI 协作或产品决策场景。</li>
-          <li>没有标准答案，只有最像你的默认工作方式。</li>
-          <li>最终会给出主人格、稀缺度、特征标签和可分享文案。</li>
+          <li>共 10 道题，专抓你在 AI 协作、上线、传播和救火时的本能反应。</li>
+          <li>别选“正确答案”，选你最容易在群里被人吐槽出来的那种做法。</li>
+          <li>最后会给你一个人格结论、标签组合，外加一句不太客气的锐评。</li>
         </ul>
         <button id="closeHow" class="btn btn-accent">知道了，开始测</button>
       </div>
