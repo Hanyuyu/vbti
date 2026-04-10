@@ -19,9 +19,6 @@ const state = {
 
 const homeSections = document.querySelectorAll(".hero-stage, .intro-grid");
 const startBtn = document.getElementById("startBtn");
-const howBtn = document.getElementById("howBtn");
-const howDialog = document.getElementById("howDialog");
-const closeHow = document.getElementById("closeHow");
 const quizPanel = document.getElementById("quizPanel");
 const resultPanel = document.getElementById("resultPanel");
 const questionTitle = document.getElementById("questionTitle");
@@ -45,6 +42,24 @@ function clearThemeClasses() {
   Object.values(TYPES).forEach((profile) => {
     resultPanel.classList.remove(profile.theme);
   });
+}
+
+function parseEmbeddedJson(id) {
+  const node = document.getElementById(id);
+  if (!node) throw new Error(`Missing embedded config: ${id}`);
+  return JSON.parse(node.textContent);
+}
+
+async function loadJson(path, fallbackId) {
+  try {
+    const response = await fetch(path, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Failed to load ${path}`);
+    }
+    return await response.json();
+  } catch {
+    return parseEmbeddedJson(fallbackId);
+  }
 }
 
 function openQuiz() {
@@ -157,17 +172,13 @@ function resetAll() {
   document.getElementById("app").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-async function loadJson(path) {
-  const response = await fetch(path, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Failed to load ${path}`);
-  }
-  return response.json();
-}
-
 async function initApp() {
   try {
-    const [types, questions] = await Promise.all([loadJson("data/types.json"), loadJson("data/questions.json")]);
+    const [types, questions] = await Promise.all([
+      loadJson("data/types.json", "typesConfig"),
+      loadJson("data/questions.json", "questionsConfig"),
+    ]);
+
     if (!types || typeof types !== "object" || Array.isArray(types)) {
       throw new Error("Type config is invalid");
     }
@@ -196,16 +207,14 @@ async function initApp() {
     }
   } catch {
     startBtn.textContent = "加载失败，刷新重试";
-    howBtn.textContent = "刷新页面";
-    howBtn.onclick = () => location.reload();
+    startBtn.disabled = false;
+    startBtn.onclick = () => location.reload();
   }
 }
 
 startBtn.disabled = true;
 startBtn.textContent = "题库加载中...";
 startBtn.onclick = openQuiz;
-howBtn.onclick = () => howDialog.showModal();
-closeHow.onclick = () => howDialog.close();
 
 prevBtn.onclick = () => {
   if (state.current > 0) {
