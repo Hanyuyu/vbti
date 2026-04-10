@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VBTI · Vibe Coding 人格测试</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <main class="app" id="app">
+      <header class="hero card">
+        <p class="kicker">VBTI / Vibe Based Type Indicator</p>
+        <h1>你的 <span>Vibe Coding</span> 人格是？</h1>
+        <p class="subtitle">
+          10 道题，3 分钟，测出你在 AI 时代的编码气质、协作风格和爆款潜力。
+        </p>
+        <div class="hero-actions">
+          <button id="startBtn" class="btn primary">开始测试</button>
+          <button id="howBtn" class="btn ghost">测试说明</button>
+        </div>
+      </header>
+
+      <section id="quizPanel" class="card hidden" aria-live="polite">
+        <div class="progress-wrap">
+          <p id="progressText">第 1 / 10 题</p>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        </div>
+        <h2 id="questionTitle"></h2>
+        <div id="options" class="options"></div>
+        <div class="quiz-actions">
+          <button id="prevBtn" class="btn ghost" disabled>上一题</button>
+          <button id="nextBtn" class="btn primary" disabled>下一题</button>
+        </div>
+      </section>
+
+      <section id="resultPanel" class="card hidden" aria-live="polite">
+        <p class="result-tag">VBTI 结果</p>
+        <h2 id="resultType"></h2>
+        <p id="resultRarity" class="rarity"></p>
+        <p id="resultDesc" class="result-desc"></p>
+
+        <div class="chips" id="traitChips"></div>
+
+        <div class="probability">
+          <h3>你的人格概率分布</h3>
+          <div id="probabilityList"></div>
+        </div>
+
+        <div class="share-card" id="shareCard">
+          <h3>分享文案</h3>
+          <p id="shareText"></p>
+        </div>
+
+        <div class="hero-actions">
+          <button id="copyBtn" class="btn primary">复制结果文案</button>
+          <button id="linkBtn" class="btn ghost">复制结果链接</button>
+          <button id="retryBtn" class="btn ghost">重新测试</button>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="howDialog">
+      <h3>怎么玩？</h3>
+      <ul>
+        <li>共 10 道情境题，选最像你的做法。</li>
+        <li>结果为 8 种 Vibe Coding 人格之一。</li>
+        <li>每种人格有稀缺度标签，适合社交分享与讨论。</li>
+      </ul>
+      <button id="closeHow" class="btn primary">知道了</button>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
+</html>
