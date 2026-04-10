@@ -3,74 +3,188 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VBTI · Vibe Coding 人格测试</title>
+    <title>VBTI / Vibe Coding 人格测试</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Noto+Sans+SC:wght@500;700;900&display=block"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="noise"></div>
-    <main class="app" id="app">
-      <header class="hero card">
-        <p class="kicker">VBTI / Vibe Based Type Indicator</p>
-        <h1>你的 <span>Vibe Coding</span> 人格是？</h1>
-        <p class="subtitle">
-          10 道题，3 分钟，测出你在 AI 时代的编码气质、协作风格和爆款潜力。
-        </p>
-        <div class="hero-actions">
-          <button id="startBtn" class="btn primary">开始测试</button>
-          <button id="howBtn" class="btn ghost">测试说明</button>
-        </div>
-      </header>
+    <div class="page-texture" aria-hidden="true"></div>
+    <div class="page-grid" aria-hidden="true"></div>
 
-      <section id="quizPanel" class="card hidden" aria-live="polite">
-        <div class="progress-wrap">
-          <p id="progressText">第 1 / 10 题</p>
-          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+    <main class="site-shell" id="app">
+      <section class="hero-stage" aria-labelledby="heroTitle">
+        <div class="hero-copy panel panel-accent tilt-left">
+          <p class="eyebrow">VBTI / VIBE BASED TYPE INDICATOR</p>
+          <div class="hero-title-stack">
+            <span class="sticker sticker-yellow">AI 时代</span>
+            <h1 id="heroTitle">
+              你的
+              <span class="outline-word">VIBE</span>
+              CODING
+              <span class="solid-word">人格</span>
+              是什么？
+            </h1>
+          </div>
+          <p class="hero-lead">
+            这不是 MBTI 的程序员翻版，而是一份给 Builder、Designer、Prompt 玩家和增长型工程师的气质检测。
+            10 道题，3 分钟，直接测出你在 AI 协作时代最像哪种角色。
+          </p>
+          <div class="hero-actions">
+            <button id="startBtn" class="btn btn-accent">开始暴露你的编码本性</button>
+            <button id="howBtn" class="btn btn-light">先看玩法</button>
+          </div>
         </div>
-        <h2 id="questionTitle"></h2>
-        <div id="options" class="options"></div>
-        <div class="quiz-actions">
-          <button id="prevBtn" class="btn ghost" disabled>上一题</button>
-          <button id="nextBtn" class="btn primary" disabled>下一题</button>
+
+        <aside class="hero-side">
+          <div class="panel panel-light tilt-right feature-board">
+            <p class="board-kicker">WHAT YOU GET</p>
+            <ul class="feature-list">
+              <li>8 种 Vibe Coding 原型</li>
+              <li>人格稀缺度 + 标签组合</li>
+              <li>可直接发朋友圈的结果文案</li>
+            </ul>
+          </div>
+
+          <div class="stat-grid">
+            <article class="panel panel-yellow stat-card">
+              <span class="stat-value">10</span>
+              <span class="stat-label">情境题</span>
+            </article>
+            <article class="panel panel-violet stat-card">
+              <span class="stat-value">8</span>
+              <span class="stat-label">人格原型</span>
+            </article>
+            <article class="panel panel-light stat-card wide">
+              <span class="stat-value">100%</span>
+              <span class="stat-label">适合分享和对线</span>
+            </article>
+          </div>
+        </aside>
+      </section>
+
+      <section class="intro-grid" aria-label="测试亮点">
+        <article class="panel panel-light intro-card tilt-left">
+          <p class="intro-index">01</p>
+          <h2>不是测技术强弱</h2>
+          <p>测的是你面对 AI、协作、速度、审美和工程质量时的默认反应。</p>
+        </article>
+        <article class="panel panel-yellow intro-card">
+          <p class="intro-index">02</p>
+          <h2>结果足够有梗</h2>
+          <p>每个类型都有鲜明叙事、标签和传播感，不是中性空话。</p>
+        </article>
+        <article class="panel panel-violet intro-card tilt-right">
+          <p class="intro-index">03</p>
+          <h2>界面就是态度</h2>
+          <p>这次整个页面按 Neo-brutalism 重做，像一张会动的数字海报。</p>
+        </article>
+      </section>
+
+      <section id="quizPanel" class="quiz-shell hidden" aria-live="polite">
+        <div class="quiz-topbar">
+          <p class="eyebrow">QUESTION LOOP</p>
+          <div class="progress-wrap panel panel-light">
+            <div class="progress-meta">
+              <p id="progressText">第 1 / 10 题</p>
+              <span>选最像你的一项</span>
+            </div>
+            <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          </div>
+        </div>
+
+        <div class="quiz-layout">
+          <section class="panel panel-light question-panel tilt-left">
+            <p class="question-label">VBTI SCENARIO</p>
+            <h2 id="questionTitle"></h2>
+            <div id="options" class="options"></div>
+            <div class="quiz-actions">
+              <button id="prevBtn" class="btn btn-light" disabled>上一题</button>
+              <button id="nextBtn" class="btn btn-accent" disabled>下一题</button>
+            </div>
+          </section>
+
+          <aside class="quiz-side">
+            <div class="panel panel-yellow tip-card">
+              <p class="side-title">答题建议</p>
+              <p>别选“看起来更专业”的答案，选你会下意识做出来的动作。</p>
+            </div>
+            <div class="panel panel-violet tip-card tilt-right">
+              <p class="side-title">判定逻辑</p>
+              <p>结果来自多维权重叠加，不是单选映射，所以会保留你的混合人格。</p>
+            </div>
+          </aside>
         </div>
       </section>
 
-      <section id="resultPanel" class="card hidden" aria-live="polite">
-        <p class="result-tag">VBTI 结果</p>
-        <h2 id="resultType"></h2>
-        <p id="resultRarity" class="rarity"></p>
-        <p id="resultDesc" class="result-desc"></p>
+      <section id="resultPanel" class="result-shell hidden" aria-live="polite">
+        <div class="result-head">
+          <div class="panel panel-yellow result-tag-wrap tilt-left">
+            <p class="result-tag">VBTI RESULT</p>
+            <p class="result-subtag">你的默认创作姿态已经暴露</p>
+          </div>
+        </div>
 
-        <div class="chips" id="traitChips"></div>
+        <div class="result-layout">
+          <section class="panel panel-light result-main">
+            <div class="result-hero">
+              <div class="result-avatar-frame">
+                <img id="resultAvatar" class="result-avatar" alt="" />
+              </div>
+              <div>
+                <p class="result-code-label">DOMINANT TYPE</p>
+                <p id="resultBadge" class="result-badge"></p>
+              </div>
+              <div class="result-mark" aria-hidden="true">
+                <span id="resultCode"></span>
+              </div>
+            </div>
+            <h2 id="resultType"></h2>
+            <p id="resultRarity" class="rarity"></p>
+            <p id="resultDesc" class="result-desc"></p>
+            <div class="chips" id="traitChips"></div>
+            <div class="result-flavor">
+              <p class="side-title">典型行为</p>
+              <p id="resultFlavor"></p>
+            </div>
+          </section>
 
-        <div class="probability">
-          <h3>你的人格概率分布</h3>
+          <aside class="result-side">
+            <div class="panel panel-accent action-card">
+              <p class="side-title">保存分享图</p>
+              <div class="result-actions">
+                <button id="savePosterBtn" class="btn btn-dark">一键保存分享图</button>
+                <button id="retryBtn" class="btn btn-yellow">重新测试</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="panel panel-light probability">
+          <div class="probability-head">
+            <h3>人格概率分布</h3>
+            <p>你不是单线程角色，你只是有一个明显主旋律。</p>
+          </div>
           <div id="probabilityList"></div>
-        </div>
-
-        <div class="share-card" id="shareCard">
-          <h3>分享文案</h3>
-          <p id="shareText"></p>
-        </div>
-
-        <div class="hero-actions">
-          <button id="copyBtn" class="btn primary">复制结果文案</button>
-          <button id="linkBtn" class="btn ghost">复制结果链接</button>
-          <button id="retryBtn" class="btn ghost">重新测试</button>
         </div>
       </section>
     </main>
 
     <dialog id="howDialog">
-      <h3>怎么玩？</h3>
-      <ul>
-        <li>共 10 道情境题，选最像你的做法。</li>
-        <li>结果为 8 种 Vibe Coding 人格之一。</li>
-        <li>每种人格有稀缺度标签，适合社交分享与讨论。</li>
-      </ul>
-      <button id="closeHow" class="btn primary">知道了</button>
+      <div class="dialog-inner">
+        <p class="eyebrow">HOW TO PLAY</p>
+        <h3>这份测试怎么玩？</h3>
+        <ul>
+          <li>共 10 道题，每题都模拟真实的 AI 协作或产品决策场景。</li>
+          <li>没有标准答案，只有最像你的默认工作方式。</li>
+          <li>最终会给出主人格、稀缺度、特征标签和可分享文案。</li>
+        </ul>
+        <button id="closeHow" class="btn btn-accent">知道了，开始测</button>
+      </div>
     </dialog>
 
     <script src="script.js"></script>
